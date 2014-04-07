@@ -18,22 +18,22 @@ LOG="../release/log-${DIR}.txt"
 
 # check that both parameters exist
 if [ -z "$PREV" ] || [ -z "$NEW" ]; then
-	echo "Usage: makegitrelease.sh <PREV> <NEW>";
-	exit 2
+    echo "Usage: makegitrelease.sh <PREV> <NEW>";
+    exit 2
 fi
 
 # check that first parameter is a valid git reference
 git log -n 1 ${PREV} > /dev/null 2>&1;
 if [ "$?" -ne 0 ]; then
-	echo "${PREV} is not a valid HASH, TAG, or BRANCH, please try again."
-	exit 2;
+    echo "${PREV} is not a valid HASH, TAG, or BRANCH, please try again."
+    exit 2;
 fi
 
 # check that second parameter is a valid git reference
 git log -n 1 ${NEW} > /dev/null 2>&1;
 if [ "$?" -ne 0 ]; then
-	echo "${NEW} is not a valid HASH, TAG, or BRANCH, please try again."
-	exit 2;
+    echo "${NEW} is not a valid HASH, TAG, or BRANCH, please try again."
+    exit 2;
 fi
 
 # get the list of files from the diff and copy them
@@ -41,22 +41,22 @@ fi
  
 # remove any previous release directories that match the new commit hash
 if [ -d "../release/${DIR}" ]; then
-	echo "Removing previous directory: ${DIR}";
-	rm -rf "../release/${DIR}/";
+    echo "Removing previous directory: ${DIR}";
+    rm -rf "../release/${DIR}/";
 fi
 
 # get list of modified files, and copy them over
 git diff ${PREV} ${NEW} --name-only --diff-filter=ACMRT | \
 while read files; \
-  do mkdir -p "../release/${DIR}/$(dirname $files)"; \
-  cp -f $files ../release/${DIR}/$(dirname $files); \
+    do mkdir -p "../release/${DIR}/$(dirname $files)"; \
+    cp -f $files ../release/${DIR}/$(dirname $files); \
 done;
 
 # if previous command did not exit with success
 if [ "$?" -ne 0 ]; then
-	echo "Error in Git Release for ${NEW}";
-	echo "There was an error creating the git release between ${PREV} and ${NEW}, please try again";
-	exit 1;
+    echo "Error in Git Release for ${NEW}";
+    echo "There was an error creating the git release between ${PREV} and ${NEW}, please try again";
+    exit 1;
 fi
 
 # remove any log files that match the new commit hash
@@ -71,7 +71,7 @@ echo "" >> ${LOG};
 echo "Files to Delete: " >> ${LOG};
 git diff ${PREV} ${NEW} --name-only --diff-filter=D | \
 while read files; \
-  do echo "D $files" >> ${LOG}; \
+    do echo "D $files" >> ${LOG}; \
 done;
 
 # add to the log file the commits included in this release

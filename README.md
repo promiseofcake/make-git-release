@@ -12,3 +12,6 @@ Script can be used between any two `hashes`, `tags`, or `branches`
 `./makegitrelease.sh <PREV> <NEW>`
 
 Output will create a `../release` folder containing a subfolder named as the `NEW` value.
+
+Originally used to create releases documenting changed files between `feature` branches
+and the `master` branch.
